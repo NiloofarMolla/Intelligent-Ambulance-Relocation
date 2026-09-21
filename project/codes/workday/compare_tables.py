@@ -11,16 +11,13 @@ def get_metrics(scenario_name, cov_file, node_cov_file, resp_file):
         df_node = pd.read_csv(node_cov_file)
         df_resp = pd.read_csv(resp_file)
 
-        # استخراج تعداد روزها (Seeds)
         num_seeds = df_resp['seed'].nunique() if 'seed' in df_resp.columns else 1
 
         avg_uncov_nodes = round(df_cov['uncovered_count'].mean(), 2)
         avg_uncov_duration = round(df_node['Average_Duration_Min'].mean(), 2)
 
-        # تقسیم مجموع جابجایی بر 30 روز
         avg_total_reloc = int(df_cov['relocating'].sum() / num_seeds)
 
-        # بار کاری هر آمبولانس به طور میانگین در روز
         workload_per_seed = df_resp.groupby(['seed', 'ambulance']).size().reset_index(name='missions')
         avg_workload = workload_per_seed.groupby('ambulance')['missions'].mean()
 
