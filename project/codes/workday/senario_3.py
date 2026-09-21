@@ -19,7 +19,7 @@ from tehran_graph import (
 # ----------------------------------------------------------------------------
 OUT_EDGES_PATH = SCRIPT_DIR / "edges_with_traffic.csv"
 REWARD_LOG_BASELINE = SCRIPT_DIR / "rl_reward_log_baseline_30.csv"
-REWARD_LOG_RL = SCRIPT_DIR / "rl_reward_log_eval.csv"  # فایل پاداش هوش مصنوعی که از قبل دارید
+REWARD_LOG_RL = SCRIPT_DIR / "rl_reward_log_eval.csv" 
 
 NUM_SEEDS = 30
 SIM_START_MIN = 6 * 60
@@ -275,7 +275,6 @@ def main():
     df_base = pd.DataFrame(all_rew)
     df_base.to_csv(REWARD_LOG_BASELINE, index=False)
 
-    # مقایسه و رسم نمودار با نتایج هوش مصنوعی
     if not REWARD_LOG_RL.exists():
         print(f"Error: {REWARD_LOG_RL.name} not found! Cannot generate comparative plot.")
         return
@@ -291,7 +290,6 @@ def main():
     plt.plot(avg_rl['minute'], avg_rl['cumulative_reward'], color='green', label='Trained Intelligent Agent',
              linewidth=2.5)
 
-    # سایه زدن فاصله بین دو نمودار که نشان دهنده پاداش خالصِ هوش مصنوعی است
     plt.fill_between(avg_base['minute'], avg_base['cumulative_reward'], avg_rl['cumulative_reward'], color='lightgreen',
                      alpha=0.3, label='Penalties Prevented by AI')
 
