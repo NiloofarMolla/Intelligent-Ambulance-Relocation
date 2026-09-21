@@ -24,7 +24,7 @@ SIM_MP4 = SCRIPT_DIR / "simulation_rl.mp4"
 SAVE_MP4 = False
 REALTIME = False
 INTERVAL_MS = 100
-NUM_SEEDS = 30  # اجرای 30 روزه
+NUM_SEEDS = 30  
 
 SIM_START_MIN = 6 * 60
 SIM_MINUTES = 24 * 60
@@ -401,7 +401,6 @@ def main():
         G_sim = build_graph(edges.copy(), nodes.copy())
         ambs = create_ambulances(G_sim)
 
-        # اجرای سریع بدون درگیر کردن گرافیک و انیمیشن
         inc, cov, resp, evts, frames, unc, out, rew = run_rl_simulation(G_sim, pos, ambs, rng, model,
                                                                         record_history=False)
 
