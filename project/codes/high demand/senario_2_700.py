@@ -16,7 +16,7 @@ COVERAGE_LOG = SCRIPT_DIR / "coverage_log_2_700.csv"
 SUMMARY_LOG = SCRIPT_DIR / "response_summary_2_700.csv"
 OUT_OF_SERVICE_LOG = SCRIPT_DIR / "out_of_service_log_2_700.csv"
 
-NUM_SEEDS = 30  # 🌟 اجرای 30 روزه
+NUM_SEEDS = 30  
 
 SIM_START_MIN = 6 * 60
 SIM_MINUTES = 24 * 60
@@ -29,7 +29,6 @@ OUT_OF_SERVICE_TIME_MIN = (30, 40)
 HOTSPOT_NODES = {"n12", "n13", "n19", "n24", "n25", "n26", "n31", "n43", "n45"}
 HOTSPOT_MULT = 1.8
 
-# 🌟 نرخ حوادث برای رسیدن به مرز بحران
 RATES_PER_HOUR = {
     (0, 6): 10, (6, 9): 45, (9, 12): 25, (12, 16): 25, (16, 20): 45, (20, 24): 40,
 }
