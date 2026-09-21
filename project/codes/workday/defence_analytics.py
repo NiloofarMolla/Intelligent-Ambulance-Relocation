@@ -24,7 +24,6 @@ def main():
         df_resp = pd.read_csv(RESPONSE_FILE)
         num_seeds = df_resp['seed'].nunique() if 'seed' in df_resp.columns else 1
 
-        # 1. گره‌های آسیب پذیر (قبلاً در test_rl میانگین‌گیری شده)
         if COVERAGE_FILE.exists():
             df_cov = pd.read_csv(COVERAGE_FILE)
             df_cov['node_name'] = df_cov['node'].apply(get_node_name)
@@ -40,12 +39,10 @@ def main():
             plt.savefig(SCRIPT_DIR / "chart_defense_vulnerable_nodes.png", dpi=300, bbox_inches='tight');
             plt.close()
 
-        # 2. تحلیل شکست‌ها (تقسیم بر 30 روز)
         df_failed = df_resp[df_resp['on_time'] == False].copy()
         if not df_failed.empty:
             df_failed['hour'] = df_failed['created_clock'].apply(lambda x: int(str(x).split(':')[0]))
 
-            # الف: شکست در ساعت
             hourly_fails = df_failed['hour'].value_counts().sort_index() / num_seeds
             plt.figure(figsize=(10, 6))
             plt.bar(hourly_fails.index, hourly_fails.values, color='crimson', edgecolor='black')
@@ -57,7 +54,6 @@ def main():
             plt.savefig(SCRIPT_DIR / "chart_defense_fails_by_hour.png", dpi=300, bbox_inches='tight');
             plt.close()
 
-            # ب: شکست در گره‌ها
             df_failed['node_name'] = df_failed['node'].apply(get_node_name)
             node_fails = (df_failed['node_name'].value_counts() / num_seeds).head(10)
             plt.figure(figsize=(12, 6))
