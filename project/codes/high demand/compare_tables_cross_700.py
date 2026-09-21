@@ -16,10 +16,8 @@ def get_metrics(scenario_name, cov_file, node_cov_file, resp_file):
         avg_uncov_nodes = round(df_cov['uncovered_count'].mean(), 2)
         avg_uncov_duration = round(df_node['Average_Duration_Min'].mean(), 2)
 
-        # استهلاک جابه‌جایی: کل زمان‌ها تقسیم بر 30 روز
         avg_total_reloc = int(df_cov['relocating'].sum() / num_seeds)
 
-        # محاسبه انحراف معیار بار کاری در روز
         workload_per_seed = df_resp.groupby(['seed', 'ambulance']).size().reset_index(name='missions')
         avg_workload = workload_per_seed.groupby('ambulance')['missions'].mean()
 
