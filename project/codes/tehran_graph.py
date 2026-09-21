@@ -143,7 +143,6 @@ def build_graph(edges, nodes):
             "distance_km": dist_km
         }
 
-        # 1. خواندن ترافیک
         if "base_traffic" in r:
             attrs["base_traffic"] = float(r["base_traffic"])
         elif "traffic" in r:
@@ -151,13 +150,11 @@ def build_graph(edges, nodes):
         else:
             attrs["base_traffic"] = 0.0
 
-        # 2. خواندن یا محاسبه زمان پایه (بر اساس سرعت واقعی 70 کیلومتر بر ساعت در شهر)
         if "travel_time_min" in r and pd.notna(r["travel_time_min"]):
             attrs["base_time_min"] = float(r["travel_time_min"])
         else:
             attrs["base_time_min"] = (dist_km / 70.0) * 60.0
 
-            # 3. برای سازگاری با توابع قبلی، فیلد current_time_min را هم مقداردهی اولیه می‌کنیم
         attrs["current_time_min"] = attrs["base_time_min"]
 
         G.add_edge(r["from_id"], r["to_id"], **attrs)
