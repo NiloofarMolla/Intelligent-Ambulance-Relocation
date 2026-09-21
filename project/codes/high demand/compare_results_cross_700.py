@@ -32,7 +32,6 @@ def main():
     df_base['Traffic_Condition'] = df_base['created_clock'].apply(categorize_traffic)
     df_rl['Traffic_Condition'] = df_rl['created_clock'].apply(categorize_traffic)
 
-    # گرفتن میانگین موفقیت برای هر Seed
     base_seed_stats = df_base.groupby(['seed', 'Traffic_Condition'])['on_time'].mean().unstack() * 100
     rl_seed_stats = df_rl.groupby(['seed', 'Traffic_Condition'])['on_time'].mean().unstack() * 100
 
@@ -53,7 +52,6 @@ def main():
         t_stat, p_val = stats.ttest_rel(r_data, b_data)
         p_values.append(p_val)
 
-    # 1. رسم نمودار
     x = np.arange(len(conditions))
     width = 0.35
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -93,7 +91,6 @@ def main():
     print(f"Chart saved as: {save_path.name}")
     plt.close()
 
-    # 2. تولید جدول آماری
     table_data = {
         "Traffic Condition (700 Demand)": conditions,
         "Baseline (Mean ± Std)": [f"{base_means[0]:.2f}% ± {base_stds[0]:.2f}%",
