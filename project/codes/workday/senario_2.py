@@ -22,7 +22,7 @@ SIM_MP4 = SCRIPT_DIR / "simulation_2.mp4"
 SAVE_MP4 = False
 REALTIME = False
 INTERVAL_MS = 100
-NUM_SEEDS = 30  # اجرای 30 روزه
+NUM_SEEDS = 30  
 
 SIM_START_MIN = 6 * 60
 SIM_MINUTES = 24 * 60
@@ -330,7 +330,6 @@ def generate_reports(df_resp, df_cov, df_unc):
         }).to_csv(SCRIPT_DIR / "KPI_summary_2.csv", index=False)
 
     if not df_unc.empty:
-        # میانگین در 30 روز
         stats = df_unc.groupby('node').agg(Frequency=('node', 'count'), Average_Duration_Min=('duration_min', 'mean'),
                                            Total_Duration_Min=('duration_min', 'sum')).reset_index()
         stats['Frequency'] = stats['Frequency'] / NUM_SEEDS
@@ -377,7 +376,6 @@ def main():
         pos = {n: (G.nodes[n]["lon"], G.nodes[n]["lat"]) for n in G.nodes}
         ambs = create_ambulances(G)
 
-        # اجرای سریع بدون درگیر کردن گرافیک و انیمیشن
         inc, cov, resp, evts, frames, unc, out = run_simulation(G, pos, ambs, rng, record_history=False)
 
         for r in inc: r['seed'] = seed; all_inc.append(r)
