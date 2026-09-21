@@ -16,8 +16,7 @@ COVERAGE_LOG = SCRIPT_DIR / "coverage_log_2_holiday.csv"
 SUMMARY_LOG = SCRIPT_DIR / "response_summary_2_holiday.csv"
 OUT_OF_SERVICE_LOG = SCRIPT_DIR / "out_of_service_log_2_holiday.csv"
 
-NUM_SEEDS = 30  # 🌟 اجرای 30 روزه
-
+NUM_SEEDS = 30  
 SIM_START_MIN = 6 * 60
 SIM_MINUTES = 24 * 60
 COVERAGE_LIMIT = 8.0
@@ -28,7 +27,6 @@ OUT_OF_SERVICE_TIME_MIN = (30, 40)
 HOTSPOT_NODES = {"n12", "n13", "n19", "n24", "n25", "n26", "n31", "n43", "n45"}
 HOTSPOT_MULT = 1.8
 
-# 🌟 الگوهای تقاضای روز تعطیل
 RATES_PER_HOUR = {
     (0, 7): 12, (7, 11): 8, (11, 14): 15, (14, 18): 12, (18, 22): 20, (22, 24): 12,
 }
@@ -39,7 +37,6 @@ def fmt_clock(minute_of_day):
     return f"{minute_of_day // 60:02d}:{minute_of_day % 60:02d}"
 
 
-# 🌟 الگوی ترافیک روز تعطیل
 def get_time_multiplier(hour):
     if 7 <= hour < 11:
         return 0.15
