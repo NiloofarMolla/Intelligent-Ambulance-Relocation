@@ -36,14 +36,13 @@ INTERVAL_MS = 100
 
 SIM_START_MIN = 6 * 60
 SIM_MINUTES = 24 * 60
-COVERAGE_LIMIT = 8.0  # هماهنگ شده با سناریوهای دیگر
+COVERAGE_LIMIT = 8.0  
 
 SERVICE_TIME_MIN = (25, 40)
 
 HOTSPOT_NODES = {"n12", "n13", "n19", "n24", "n25", "n26", "n31", "n43", "n45"}
 HOTSPOT_MULT = 1.8
 
-# افزایش نرخ تقاضا به حدود 400 حادثه در روز
 RATES_PER_HOUR = {
     (0, 6): 6,
     (6, 9): 25,
@@ -366,7 +365,7 @@ def run_simulation(G, pos, ambulances, rng, times, paths):
                     amb["status"] = "free"
 
         # ----------------------------------------------------
-        # Centralized Advanced Relocation (Like Scenarios 2/3)
+        # Centralized Advanced Relocation 
         # ----------------------------------------------------
         if 6 <= hour < 24:
             _, logically_bad = get_coverage_states(G, ambulances, times)
