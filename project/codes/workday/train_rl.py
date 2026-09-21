@@ -28,7 +28,6 @@ SIM_MINUTES = 24 * 60
 COVERAGE_LIMIT = 8.0
 SERVICE_TIME_MIN = (25, 40)
 
-# <--- متغیر جا افتاده اضافه شد --->
 RATES_PER_HOUR = {
     (0, 6): 6,
     (6, 9): 25,
@@ -108,7 +107,6 @@ class TehranAmbulanceEnv(gym.Env):
 
         self.action_space = spaces.Discrete(self.num_nodes + 1)
 
-        # 🌟 تغییر مهم: سایز مشاهدات را از 1 به 3 افزایش دادیم
         self.observation_space = spaces.Box(
             low=0.0, high=1.0, shape=(3 + self.num_nodes,), dtype=np.float32
         )
@@ -133,11 +131,8 @@ class TehranAmbulanceEnv(gym.Env):
         """ Returns the current state of the environment as a numpy array. """
         obs = np.zeros(3 + self.num_nodes, dtype=np.float32)
 
-        # 1. زمان نرمال شده
         obs[0] = (self.t - SIM_START_MIN) / SIM_MINUTES
-        # 2. ضریب ترافیک فعلی (تا هوش مصنوعی پیک ترافیک را حس کند)
         obs[1] = self.last_multiplier
-        # 3. نسبت آمبولانس‌های آزاد (تا بفهمد چقدر نیرو برایش مانده)
         obs[2] = sum(1 for a in self.ambulances if a["status"] == "free") / max(1, len(self.ambulances))
 
         effective_positions = [a["current_node"] for a in self.ambulances if a["status"] == "free"]
@@ -312,22 +307,18 @@ def main():
     print("Algorithm: Proximal Policy Optimization (PPO)")
     print("=" * 50)
 
-    # ساخت محیط
     env = TehranAmbulanceEnv()
 
-    # ساخت مدل PPO (شبکه عصبی)
     model = PPO("MlpPolicy", env, verbose=1, learning_rate=0.0003, n_steps=2048, batch_size=64)
 
     print("\n--- Starting Training Process ---")
     print("This may take 10 to 30 minutes depending on your CPU.")
     print("The agent is exploring the city, making mistakes, and learning...")
 
-    # آموزش مدل برای 50,000 قدم
     TOTAL_TIMESTEPS = 1500000
 
     model.learn(total_timesteps=TOTAL_TIMESTEPS)
 
-    # ذخیره مغز آموزش‌دیده
     model.save(MODEL_SAVE_PATH)
     print(f"\nSUCCESS! Model successfully trained and saved to {MODEL_SAVE_PATH}.zip")
     print("You can now load this model to evaluate its intelligent decisions.")
